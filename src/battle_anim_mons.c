@@ -111,7 +111,7 @@ u8 GetBattlerSpriteCoord(u8 battlerId, u8 coordType)
     u8 retVal;
     u16 species;
     struct BattleSpriteInfo *spriteInfo;
-
+	//species = 412;
     switch (coordType)
     {
     case BATTLER_COORD_X:
@@ -131,6 +131,7 @@ u8 GetBattlerSpriteCoord(u8 battlerId, u8 coordType)
                 species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battlerId]], MON_DATA_SPECIES);
             else
                 species = spriteInfo[battlerId].transformSpecies;
+			//species = 412;
         }
         else
         {

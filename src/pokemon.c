@@ -2696,6 +2696,7 @@ u8 GetGenderFromSpeciesAndPersonality(u16 species, u32 personality)
 
 void SetMultiuseSpriteTemplateToPokemon(u16 speciesTag, u8 battlerPosition)
 {
+	//speciesTag = 412;
     if (gMonSpritesGfxPtr != NULL)
     {
         if (battlerPosition >= 4)
@@ -5712,6 +5713,7 @@ const u32 *GetMonFrontSpritePal(struct Pokemon *mon)
     u16 species = GetMonData(mon, MON_DATA_SPECIES2, 0);
     u32 otId = GetMonData(mon, MON_DATA_OT_ID, 0);
     u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, 0);
+	//species = 412;
     return GetMonSpritePalFromSpeciesAndPersonality(species, otId, personality);
 }
 
@@ -5721,11 +5723,12 @@ const u32 *GetMonSpritePalFromSpeciesAndPersonality(u16 species, u32 otId, u32 p
 
     if (species > SPECIES_EGG)
         return gMonPaletteTable[0].data;
-
+	
     shinyValue = HIHALF(otId) ^ LOHALF(otId) ^ HIHALF(personality) ^ LOHALF(personality);
     if (shinyValue < 8)
         return gMonShinyPaletteTable[species].data;
     else
+		//species = 412;
         return gMonPaletteTable[species].data;
 }
 
@@ -5734,13 +5737,14 @@ const struct CompressedSpritePalette *GetMonSpritePalStruct(struct Pokemon *mon)
     u16 species = GetMonData(mon, MON_DATA_SPECIES2, 0);
     u32 otId = GetMonData(mon, MON_DATA_OT_ID, 0);
     u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, 0);
+	//species = 412;
     return GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
 }
 
 const struct CompressedSpritePalette *GetMonSpritePalStructFromOtIdPersonality(u16 species, u32 otId , u32 personality)
 {
     u32 shinyValue;
-
+	//species = 412;
     shinyValue = HIHALF(otId) ^ LOHALF(otId) ^ HIHALF(personality) ^ LOHALF(personality);
     if (shinyValue < 8)
         return &gMonShinyPaletteTable[species];

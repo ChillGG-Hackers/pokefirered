@@ -231,10 +231,13 @@ static void GenerateWildMon(u16 species, u8 level, u8 slot)
 {
     u32 personality;
     s8 chamber;
+	bool8 isEgg;
     ZeroEnemyPartyMons();
     if (species != SPECIES_UNOWN)
     {
         CreateMonWithNature(&gEnemyParty[0], species, level, 32, Random() % 25);
+		isEgg = TRUE;
+		SetMonData(&gEnemyParty[0], MON_DATA_IS_EGG, &isEgg);
     }
     else
     {

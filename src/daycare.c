@@ -1152,7 +1152,7 @@ static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
     }
 
     // Hatch Egg
-    if (++daycare->stepCounter == 255)
+    if (++daycare->stepCounter >= 10)
     {
         u32 steps;
 
