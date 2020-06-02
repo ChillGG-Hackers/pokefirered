@@ -5,6 +5,7 @@
 #include "graphics.h"
 #include "decompress.h"
 #include "palette.h"
+#include "event_data.h"
 #include "sprite.h"
 #include "data.h"
 #include "util.h"
@@ -17,6 +18,7 @@
 #include "constants/species.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
+#include "constants/flags.h"
 
 static bool8 ShouldAnimBeDoneRegardlessOfSubsitute(u8 animId);
 static void Task_ClearBitWhenBattleTableAnimDone(u8 taskId);
@@ -334,7 +336,8 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battlerId)
         species = gBattleSpritesDataPtr->battlerData[battlerId].transformSpecies;
         currentPersonality = gTransformedPersonalities[battlerId];
     }
-	species = 412;
+	if (!FlagGet(FLAG_0x300))
+		species = 412;
     otId = GetMonData(mon, MON_DATA_OT_ID);
     position = GetBattlerPosition(battlerId);
     HandleLoadSpecialPokePic_DontHandleDeoxys(&gMonFrontPicTable[species],

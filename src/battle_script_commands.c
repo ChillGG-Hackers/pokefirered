@@ -9,6 +9,7 @@
 #include "mail.h"
 #include "event_data.h"
 #include "strings.h"
+#include "region_map.h"
 #include "pokemon_special_anim.h"
 #include "pokemon_storage_system.h"
 #include "pokemon_summary_screen.h"
@@ -9257,6 +9258,11 @@ static void atkEF_handleballthrow(void)
             u32 odds;
             u8 catchRate;
 
+			if ( FlagGet(FLAG_0x300)) {
+				BtlController_EmitBallThrowAnim(0, BALL_GHOST_DODGE);
+				MarkBattlerForControllerExec(gActiveBattler);
+				gBattlescriptCurrInstr = BattleScript_GhostBallDodge;
+			} else {
             if (gLastUsedItem == ITEM_SAFARI_BALL)
                 catchRate = gBattleStruct->safariCatchFactor * 1275 / 100;
             else
@@ -9331,6 +9337,7 @@ static void atkEF_handleballthrow(void)
             {
                 BtlController_EmitBallThrowAnim(0, BALL_3_SHAKES_SUCCESS);
                 MarkBattlerForControllerExec(gActiveBattler);
+				FlagSet(FLAG_0x300);
                 gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
                 SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_POKEBALL, &gLastUsedItem);
                 if (CalculatePlayerPartyCount() == 6)
@@ -9349,6 +9356,7 @@ static void atkEF_handleballthrow(void)
                     shakes = BALL_3_SHAKES_SUCCESS; // why calculate the shakes before that check?
                 BtlController_EmitBallThrowAnim(0, shakes);
                 MarkBattlerForControllerExec(gActiveBattler);
+				FlagSet(FLAG_0x300);
                 if (shakes == BALL_3_SHAKES_SUCCESS) // mon caught, copy of the code above
                 {
                     gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
@@ -9364,6 +9372,7 @@ static void atkEF_handleballthrow(void)
                     gBattlescriptCurrInstr = BattleScript_ShakeBallThrow;
                 }
             }
+			}
         }
     }
 }
@@ -9397,7 +9406,6 @@ static void atkF1_trysetcaughtmondexflags(void)
 {
     u16 species = GetMonData(&gEnemyParty[0], MON_DATA_SPECIES, NULL);
     u32 personality = GetMonData(&gEnemyParty[0], MON_DATA_PERSONALITY, NULL);
-
     if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT))
     {
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);

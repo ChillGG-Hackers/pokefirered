@@ -750,7 +750,7 @@ bool8 SetDiveWarpDive(u16 x, u16 y)
 void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
 {
     int paletteIndex;
-
+	
     SetWarpDestination(mapGroup, mapNum, -1, -1, -1);
     Overworld_TryMapConnectionMusicTransition();
     ApplyCurrentWarp();

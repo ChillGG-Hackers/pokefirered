@@ -9,6 +9,7 @@
 #include "overworld.h"
 #include "metatile_behavior.h"
 #include "event_scripts.h"
+#include "region_map.h"
 #include "script.h"
 #include "link.h"
 #include "quest_log.h"
@@ -232,12 +233,19 @@ static void GenerateWildMon(u16 species, u8 level, u8 slot)
     u32 personality;
     s8 chamber;
 	bool8 isEgg;
+	u8 mapName[25];
+	u32 mapID = GetCurrentRegionMapSectionId();
+	u8 *ptr = GetMapName(mapName, mapID, 0);
+	u8 monName = GetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, NULL);
     ZeroEnemyPartyMons();
     if (species != SPECIES_UNOWN)
     {
         CreateMonWithNature(&gEnemyParty[0], species, level, 32, Random() % 25);
-		isEgg = TRUE;
-		SetMonData(&gEnemyParty[0], MON_DATA_IS_EGG, &isEgg);
+		if (!FlagGet(FLAG_0x300)) {
+			isEgg = TRUE;
+			SetMonData(&gEnemyParty[0], MON_DATA_IS_EGG, &isEgg);
+			//SetMonData(&gEnemyParty[0], MON_DATA_NICKNAME, mapName);
+		}
     }
     else
     {
