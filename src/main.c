@@ -9,6 +9,7 @@
 #include "help_system.h"
 #include "new_menu_helpers.h"
 #include "overworld.h"
+#include "event_data.h"
 #include "play_time.h"
 #include "intro.h"
 #include "battle_controllers.h"
@@ -37,6 +38,31 @@ const char BuildDateTime[] = "2004 04 26 11:20";
 const char BuildDateTime[] = "2004 07 20 09:30";
 #endif //REVISION
 #endif //MODERN
+
+#define NUM_ROUTE_FLAGS 36
+
+static const u16 UsedFlags[] = {
+FLAG_0x0AF, FLAG_0x0B0, FLAG_0x0B1, FLAG_0x0B2,
+FLAG_0x0B3, FLAG_0x0B4, FLAG_0x0B5, FLAG_0x0B6,
+FLAG_0x0B7, FLAG_0x0B8, FLAG_0x0B9, FLAG_0x0BA,
+FLAG_0x0BB, FLAG_0x0BC, FLAG_0x0BD, FLAG_0x0BE,
+FLAG_0x0BF, FLAG_0x0C0, FLAG_0x0C1, FLAG_0x0C2,
+FLAG_0x0C3, FLAG_0x0C4, FLAG_0x0C5, FLAG_0x0C6,
+FLAG_0x0C7, FLAG_0x0C8, FLAG_0x0C9, FLAG_0x0CA,
+FLAG_0x0CB, FLAG_0x0CC, FLAG_0x0CD, FLAG_0x0CE,
+FLAG_0x4BD, FLAG_0x0D0, FLAG_0x0D1, FLAG_0x0D2
+};
+
+void ResetFlagsHere(void) {
+	if (!FlagGet(FLAG_0x4FF)) {
+		int i;
+		for (i = 0; i < NUM_ROUTE_FLAGS; i++) {
+			if (FlagGet(UsedFlags[i]))
+				FlagClear(UsedFlags[i]);
+		};
+		FlagSet(FLAG_0x4FF);
+	}
+};
 
 const IntrFunc gIntrTableTemplate[] =
 {
@@ -128,6 +154,7 @@ void AgbMain()
     EnableVCountIntrAtLine150();
     InitRFU();
     CheckForFlashMemory();
+	//ResetFlagsHere();
     InitMainCallbacks();
     InitMapMusic();
     ClearDma3Requests();

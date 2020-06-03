@@ -47,7 +47,7 @@ bool8 SweetScentWildEncounter(void);
 void SeedWildEncounterRng(u16 randVal);
 void ResetEncounterRateModifiers(void);
 bool8 TryStandardWildEncounter(u32 currMetatileBehavior);
-bool8 GetMapFlag(u8* mapName);
-bool8 SetMapFlag(u8* mapName);
+bool8 GetMapFlag(u8 mapName[]);
+bool8 SetMapFlag(u8 mapName[]);
 
 #endif // GUARD_WILD_ENCOUNTER_H

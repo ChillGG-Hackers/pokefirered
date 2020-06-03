@@ -345,6 +345,7 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battlerId)
     }
 	if (!GetMapFlag(mapName))
 		species = 412;
+	//SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, mapName);
     otId = GetMonData(mon, MON_DATA_OT_ID);
     position = GetBattlerPosition(battlerId);
     HandleLoadSpecialPokePic_DontHandleDeoxys(&gMonFrontPicTable[species],

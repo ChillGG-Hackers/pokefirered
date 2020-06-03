@@ -9261,8 +9261,8 @@ static void atkEF_handleballthrow(void)
         {
             u32 odds;
             u8 catchRate;
-
-			if ( GetMapFlag(mapName)) {
+			//SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, mapName);
+			if (GetMapFlag(mapName)) {
 				BtlController_EmitBallThrowAnim(0, BALL_GHOST_DODGE);
 				MarkBattlerForControllerExec(gActiveBattler);
 				gBattlescriptCurrInstr = BattleScript_GhostBallDodge;
@@ -9359,10 +9359,10 @@ static void atkEF_handleballthrow(void)
 					if (gLastUsedItem == ITEM_MASTER_BALL)
 						shakes = BALL_3_SHAKES_SUCCESS; // why calculate the shakes before that check?
 					BtlController_EmitBallThrowAnim(0, shakes);
-					MarkBattlerForControllerExec(gActiveBattler);
-					SetMapFlag(mapName);
+					MarkBattlerForControllerExec(gActiveBattler);			
 					if (shakes == BALL_3_SHAKES_SUCCESS) // mon caught, copy of the code above
 					{
+						SetMapFlag(mapName);
 						gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
 						SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_POKEBALL, &gLastUsedItem);
 						if (CalculatePlayerPartyCount() == 6)

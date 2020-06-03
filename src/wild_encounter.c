@@ -12,6 +12,7 @@
 #include "region_map.h"
 #include "script.h"
 #include "link.h"
+#include "string.h"
 #include "quest_log.h"
 #include "constants/species.h"
 #include "constants/maps.h"
@@ -19,115 +20,115 @@
 #include "constants/abilities.h"
 #include "constants/items.h"
 
-const u8 gFlagSecName_PalletTown[] = "PALLET TOWN";
-const u8 gFlagSecName_ViridianCity[] = "VIRIDIAN CITY";
-const u8 gFlagSecName_PewterCity[] = "PEWTER CITY";
-const u8 gFlagSecName_CeruleanCity[] = "CERULEAN CITY";
-const u8 gFlagSecName_LavenderTown[] = "LAVENDER TOWN";
-const u8 gFlagSecName_VermilionCity[] = "VERMILION CITY";
-const u8 gFlagSecName_CeladonCity[] = "CELADON CITY";
-const u8 gFlagSecName_FuchsiaCity[] = "FUCHSIA CITY";
-const u8 gFlagSecName_CinnabarIsland[] = "CINNABAR ISLAND";
-const u8 gFlagSecName_IndigoPlateau[] = "INDIGO PLATEAU";
-const u8 gFlagSecName_SaffronCity[] = "SAFFRON CITY";
-const u8 gFlagSecName_Route4[] = "ROUTE 4";
-const u8 gFlagSecName_Route10[] = "ROUTE 10";
-const u8 gFlagSecName_Route1[] = "ROUTE 1";
-const u8 gFlagSecName_Route2[] = "ROUTE 2";
-const u8 gFlagSecName_Route3[] = "ROUTE 3";
-const u8 gFlagSecName_Route4_2[] = "ROUTE 4";
-const u8 gFlagSecName_Route5[] = "ROUTE 5";
-const u8 gFlagSecName_Route6[] = "ROUTE 6";
-const u8 gFlagSecName_Route7[] = "ROUTE 7";
-const u8 gFlagSecName_Route8[] = "ROUTE 8";
-const u8 gFlagSecName_Route9[] = "ROUTE 9";
-const u8 gFlagSecName_Route10_2[] = "ROUTE 10";
-const u8 gFlagSecName_Route11[] = "ROUTE 11";
-const u8 gFlagSecName_Route12[] = "ROUTE 12";
-const u8 gFlagSecName_Route13[] = "ROUTE 13";
-const u8 gFlagSecName_Route14[] = "ROUTE 14";
-const u8 gFlagSecName_Route15[] = "ROUTE 15";
-const u8 gFlagSecName_Route16[] = "ROUTE 16";
-const u8 gFlagSecName_Route17[] = "ROUTE 17";
-const u8 gFlagSecName_Route18[] = "ROUTE 18";
-const u8 gFlagSecName_Route19[] = "ROUTE 19";
-const u8 gFlagSecName_Route20[] = "ROUTE 20";
-const u8 gFlagSecName_Route21[] = "ROUTE 21";
+const u8 gFlagSecName_PalletTown[] = _("PALLET TOWN");
+const u8 gFlagSecName_ViridianCity[] = _("VIRIDIAN CITY");
+const u8 gFlagSecName_PewterCity[] = _("PEWTER CITY");
+const u8 gFlagSecName_CeruleanCity[] = _("CERULEAN CITY");
+const u8 gFlagSecName_LavenderTown[] = _("LAVENDER TOWN");
+const u8 gFlagSecName_VermilionCity[] = _("VERMILION CITY");
+const u8 gFlagSecName_CeladonCity[] = _("CELADON CITY");
+const u8 gFlagSecName_FuchsiaCity[] = _("FUCHSIA CITY");
+const u8 gFlagSecName_CinnabarIsland[] = _("CINNABAR ISLAND");
+const u8 gFlagSecName_IndigoPlateau[] = _("INDIGO PLATEAU");
+const u8 gFlagSecName_SaffronCity[] = _("SAFFRON CITY");
+const u8 gFlagSecName_Route4[] = _("ROUTE 4");
+const u8 gFlagSecName_Route10[] = _("ROUTE 10");
+const u8 gFlagSecName_Route1[] = _("ROUTE 1");
+const u8 gFlagSecName_Route2[] = _("ROUTE 2");
+const u8 gFlagSecName_Route3[] = _("ROUTE 3");
+const u8 gFlagSecName_Route4_2[] = _("ROUTE 4");
+const u8 gFlagSecName_Route5[] = _("ROUTE 5");
+const u8 gFlagSecName_Route6[] = _("ROUTE 6");
+const u8 gFlagSecName_Route7[] = _("ROUTE 7");
+const u8 gFlagSecName_Route8[] = _("ROUTE 8");
+const u8 gFlagSecName_Route9[] = _("ROUTE 9");
+const u8 gFlagSecName_Route10_2[] = _("ROUTE 10");
+const u8 gFlagSecName_Route11[] = _("ROUTE 11");
+const u8 gFlagSecName_Route12[] = _("ROUTE 12");
+const u8 gFlagSecName_Route13[] = _("ROUTE 13");
+const u8 gFlagSecName_Route14[] = _("ROUTE 14");
+const u8 gFlagSecName_Route15[] = _("ROUTE 15");
+const u8 gFlagSecName_Route16[] = _("ROUTE 16");
+const u8 gFlagSecName_Route17[] = _("ROUTE 17");
+const u8 gFlagSecName_Route18[] = _("ROUTE 18");
+const u8 gFlagSecName_Route19[] = _("ROUTE 19");
+const u8 gFlagSecName_Route20[] = _("ROUTE 20");
+const u8 gFlagSecName_Route21[] = _("ROUTE 21");
 const u8 gFlagSecName_Route22[] = "ROUTE 22";
-const u8 gFlagSecName_Route23[] = "ROUTE 23";
-const u8 gFlagSecName_Route24[] = "ROUTE 24";
-const u8 gFlagSecName_Route25[] = "ROUTE 25";
-const u8 gFlagSecName_ViridianForest[] = "VIRIDIAN FOREST";
-const u8 gFlagSecName_MtMoon[] = "MT. MOON";
-const u8 gFlagSecName_SSAnne[] = "S.S. ANNE";
-const u8 gFlagSecName_UndergroundPath[] = "UNDERGROUND PATH";
-const u8 gFlagSecName_UndergroundPath_2[] = "UNDERGROUND PATH";
-const u8 gFlagSecName_DiglettsCave[] = "DIGLETT'S CAVE";
-const u8 gFlagSecName_VictoryRoad[] = "VICTORY ROAD";
-const u8 gFlagSecName_RocketHideout[] = "ROCKET HIDEOUT";
-const u8 gFlagSecName_SilphCo[] = "SILPH CO.";
-const u8 gFlagSecName_PokemonMansion[] = "POKEMON MANSION";
-const u8 gFlagSecName_SafariZone[] = "SAFARI ZONE";
-const u8 gFlagSecName_PokemonLeague[] = "POKEMON LEAGUE";
-const u8 gFlagSecName_RockTunnel[] = "ROCK TUNNEL";
-const u8 gFlagSecName_SeafoamIslands[] = "SEAFOAM ISLANDS";
-const u8 gFlagSecName_PokemonTower[] = "POKEMON TOWER";
-const u8 gFlagSecName_CeruleanCave[] = "CERULEAN CAVE";
-const u8 gFlagSecName_PowerPlant[] = "POWER PLANT";
-const u8 gFlagSecName_OneIsland[] = "ONE ISLAND";
-const u8 gFlagSecName_TwoIsland[] = "TWO ISLAND";
-const u8 gFlagSecName_ThreeIsland[] = "THREE ISLAND";
-const u8 gFlagSecName_FourIsland[] = "FOUR ISLAND";
-const u8 gFlagSecName_FiveIsland[] = "FIVE ISLAND";
-const u8 gFlagSecName_SevenIsland[] = "SEVEN ISLAND";
-const u8 gFlagSecName_SixIsland[] = "SIX ISLAND";
-const u8 gFlagSecName_KindleRoad[] = "KINDLE ROAD";
-const u8 gFlagSecName_TreasureBeach[] = "TREASURE BEACH";
-const u8 gFlagSecName_CapeBrink[] = "CAPE BRINK";
-const u8 gFlagSecName_BondBridge[] = "BOND BRIDGE";
-const u8 gFlagSecName_ThreeIslePort[] = "THREE ISLE PORT";
-const u8 gFlagSecName_SeviiIsle6[] = "SEVII ISLE 6";
-const u8 gFlagSecName_SeviiIsle7[] = "SEVII ISLE 7";
-const u8 gFlagSecName_SeviiIsle8[] = "SEVII ISLE 8";
-const u8 gFlagSecName_SeviiIsle9[] = "SEVII ISLE 9";
-const u8 gFlagSecName_ResortGorgeous[] = "RESORT GORGEOUS";
-const u8 gFlagSecName_WaterLabyrinth[] = "WATER LABYRINTH";
-const u8 gFlagSecName_FiveIsleMeadow[] = "FIVE ISLE MEADOW";
-const u8 gFlagSecName_MemorialPillar[] = "MEMORIAL PILLAR";
-const u8 gFlagSecName_OutcastIsland[] = "OUTCAST ISLAND";
-const u8 gFlagSecName_GreenPath[] = "GREEN PATH";
-const u8 gFlagSecName_WaterPath[] = "WATER PATH";
-const u8 gFlagSecName_RuinValley[] = "RUIN VALLEY";
-const u8 gFlagSecName_TrainerTower[] = "TRAINER TOWER";
-const u8 gFlagSecName_CanyonEntrance[] = "CANYON ENTRANCE";
-const u8 gFlagSecName_SevaultCanyon[] = "SEVAULT CANYON";
-const u8 gFlagSecName_TanobyRuins[] = "TANOBY RUINS";
-const u8 gFlagSecName_SeviiIsle22[] = "SEVII ISLE 22";
-const u8 gFlagSecName_SeviiIsle23[] = "SEVII ISLE 23";
-const u8 gFlagSecName_SeviiIsle24[] = "SEVII ISLE 24";
-const u8 gFlagSecName_NavelRock[] = "NAVEL ROCK";
-const u8 gFlagSecName_MtEmber[] = "MT. EMBER";
-const u8 gFlagSecName_BerryForest[] = "BERRY FOREST";
-const u8 gFlagSecName_IcefallCave[] = "ICEFALL CAVE";
-const u8 gFlagSecName_RocketWarehouse[] = "ROCKET WAREHOUSE";
-const u8 gFlagSecName_TrainerTower_2[] = "TRAINER TOWER";
-const u8 gFlagSecName_DottedHole[] = "DOTTED HOLE";
-const u8 gFlagSecName_LostCave[] = "LOST CAVE";
-const u8 gFlagSecName_PatternBush[] = "PATTERN BUSH";
-const u8 gFlagSecName_AlteringCave[] = "ALTERING CAVE";
-const u8 gFlagSecName_TanobyChambers[] = "TANOBY CHAMBERS";
-const u8 gFlagSecName_ThreeIslePath[] = "THREE ISLE PATH";
-const u8 gFlagSecName_TanobyKey[] = "TANOBY KEY";
-const u8 gFlagSecName_BirthIsland[] = "BIRTH ISLAND";
-const u8 gFlagSecName_MoneanChamber[] = "MONEAN CHAMBER";
-const u8 gFlagSecName_LiptooChamber[] = "LIPTOO CHAMBER";
-const u8 gFlagSecName_WeepthChamber[] = "WEEPTH CHAMBER";
-const u8 gFlagSecName_DilfordChamber[] = "DILFORD CHAMBER";
-const u8 gFlagSecName_ScufibChamber[] = "SCUFIB CHAMBER";
-const u8 gFlagSecName_RixyChamber[] = "RIXY CHAMBER";
-const u8 gFlagSecName_ViapoisChamber[] = "VIAPOIS CHAMBER";
-const u8 gFlagSecName_EmberSpa[] = "EMBER SPA";
-const u8 gFlagSecName_CeladonDept[] = "CELADON DEPT.";
+const u8 gFlagSecName_Route23[] = _("ROUTE 23");
+const u8 gFlagSecName_Route24[] = _("ROUTE 24");
+const u8 gFlagSecName_Route25[] = _("ROUTE 25");
+const u8 gFlagSecName_ViridianForest[] = _("VIRIDIAN FOREST");
+const u8 gFlagSecName_MtMoon[] = _("MT. MOON");
+const u8 gFlagSecName_SSAnne[] = _("S.S. ANNE");
+const u8 gFlagSecName_UndergroundPath[] = _("UNDERGROUND PATH");
+const u8 gFlagSecName_UndergroundPath_2[] = _("UNDERGROUND PATH");
+const u8 gFlagSecName_DiglettsCave[] = _("DIGLETT'S CAVE");
+const u8 gFlagSecName_VictoryRoad[] = _("VICTORY ROAD");
+const u8 gFlagSecName_RocketHideout[] = _("ROCKET HIDEOUT");
+const u8 gFlagSecName_SilphCo[] = _("SILPH CO.");
+const u8 gFlagSecName_PokemonMansion[] = _("POKEMON MANSION");
+const u8 gFlagSecName_SafariZone[] = _("SAFARI ZONE");
+const u8 gFlagSecName_PokemonLeague[] = _("POKEMON LEAGUE");
+const u8 gFlagSecName_RockTunnel[] = _("ROCK TUNNEL");
+const u8 gFlagSecName_SeafoamIslands[] = _("SEAFOAM ISLANDS");
+const u8 gFlagSecName_PokemonTower[] = _("POKEMON TOWER");
+const u8 gFlagSecName_CeruleanCave[] = _("CERULEAN CAVE");
+const u8 gFlagSecName_PowerPlant[] = _("POWER PLANT");
+const u8 gFlagSecName_OneIsland[] = _("ONE ISLAND");
+const u8 gFlagSecName_TwoIsland[] = _("TWO ISLAND");
+const u8 gFlagSecName_ThreeIsland[] = _("THREE ISLAND");
+const u8 gFlagSecName_FourIsland[] = _("FOUR ISLAND");
+const u8 gFlagSecName_FiveIsland[] = _("FIVE ISLAND");
+const u8 gFlagSecName_SevenIsland[] = _("SEVEN ISLAND");
+const u8 gFlagSecName_SixIsland[] = _("SIX ISLAND");
+const u8 gFlagSecName_KindleRoad[] = _("KINDLE ROAD");
+const u8 gFlagSecName_TreasureBeach[] = _("TREASURE BEACH");
+const u8 gFlagSecName_CapeBrink[] = _("CAPE BRINK");
+const u8 gFlagSecName_BondBridge[] = _("BOND BRIDGE");
+const u8 gFlagSecName_ThreeIslePort[] = _("THREE ISLE PORT");
+const u8 gFlagSecName_SeviiIsle6[] = _("SEVII ISLE 6");
+const u8 gFlagSecName_SeviiIsle7[] = _("SEVII ISLE 7");
+const u8 gFlagSecName_SeviiIsle8[] = _("SEVII ISLE 8");
+const u8 gFlagSecName_SeviiIsle9[] = _("SEVII ISLE 9");
+const u8 gFlagSecName_ResortGorgeous[] = _("RESORT GORGEOUS");
+const u8 gFlagSecName_WaterLabyrinth[] = _("WATER LABYRINTH");
+const u8 gFlagSecName_FiveIsleMeadow[] = _("FIVE ISLE MEADOW");
+const u8 gFlagSecName_MemorialPillar[] = _("MEMORIAL PILLAR");
+const u8 gFlagSecName_OutcastIsland[] = _("OUTCAST ISLAND");
+const u8 gFlagSecName_GreenPath[] = _("GREEN PATH");
+const u8 gFlagSecName_WaterPath[] = _("WATER PATH");
+const u8 gFlagSecName_RuinValley[] = _("RUIN VALLEY");
+const u8 gFlagSecName_TrainerTower[] = _("TRAINER TOWER");
+const u8 gFlagSecName_CanyonEntrance[] = _("CANYON ENTRANCE");
+const u8 gFlagSecName_SevaultCanyon[] = _("SEVAULT CANYON");
+const u8 gFlagSecName_TanobyRuins[] = _("TANOBY RUINS");
+const u8 gFlagSecName_SeviiIsle22[] = _("SEVII ISLE 22");
+const u8 gFlagSecName_SeviiIsle23[] = _("SEVII ISLE 23");
+const u8 gFlagSecName_SeviiIsle24[] = _("SEVII ISLE 24");
+const u8 gFlagSecName_NavelRock[] = _("NAVEL ROCK");
+const u8 gFlagSecName_MtEmber[] = _("MT. EMBER");
+const u8 gFlagSecName_BerryForest[] = _("BERRY FOREST");
+const u8 gFlagSecName_IcefallCave[] = _("ICEFALL CAVE");
+const u8 gFlagSecName_RocketWarehouse[] = _("ROCKET WAREHOUSE");
+const u8 gFlagSecName_TrainerTower_2[] = _("TRAINER TOWER");
+const u8 gFlagSecName_DottedHole[] = _("DOTTED HOLE");
+const u8 gFlagSecName_LostCave[] = _("LOST CAVE");
+const u8 gFlagSecName_PatternBush[] = _("PATTERN BUSH");
+const u8 gFlagSecName_AlteringCave[] = _("ALTERING CAVE");
+const u8 gFlagSecName_TanobyChambers[] = _("TANOBY CHAMBERS");
+const u8 gFlagSecName_ThreeIslePath[] = _("THREE ISLE PATH");
+const u8 gFlagSecName_TanobyKey[] = _("TANOBY KEY");
+const u8 gFlagSecName_BirthIsland[] = _("BIRTH ISLAND");
+const u8 gFlagSecName_MoneanChamber[] = _("MONEAN CHAMBER");
+const u8 gFlagSecName_LiptooChamber[] = _("LIPTOO CHAMBER");
+const u8 gFlagSecName_WeepthChamber[] = _("WEEPTH CHAMBER");
+const u8 gFlagSecName_DilfordChamber[] = _("DILFORD CHAMBER");
+const u8 gFlagSecName_ScufibChamber[] = _("SCUFIB CHAMBER");
+const u8 gFlagSecName_RixyChamber[] = _("RIXY CHAMBER");
+const u8 gFlagSecName_ViapoisChamber[] = _("VIAPOIS CHAMBER");
+const u8 gFlagSecName_EmberSpa[] = _("EMBER SPA");
+const u8 gFlagSecName_CeladonDept[] = _("CELADON DEPT.");
 
 struct WildEncounterData
 {
@@ -177,154 +178,218 @@ void DisableWildEncounters(bool8 state)
     sWildEncountersDisabled = state;
 }
 
-bool8 GetMapFlag(u8* mapName) {
-	if (mapName == gFlagSecName_PalletTown)
-		return FlagGet(FLAG_0x0AF);
-	else if (mapName == gFlagSecName_ViridianCity)
-		return FlagGet(FLAG_0x0B0);
-	else if (mapName == gFlagSecName_PewterCity)
-		return FlagGet(FLAG_0x0B1);
-	else if (mapName == gFlagSecName_CeruleanCity)
-		return FlagGet(FLAG_0x0B2);
-	else if (mapName == gFlagSecName_LavenderTown)
-		return FlagGet(FLAG_0x0B3);
-	else if (mapName == gFlagSecName_VermilionCity)
-		return FlagGet(FLAG_0x0B4);
-	else if (mapName == gFlagSecName_CeladonCity)
-		return FlagGet(FLAG_0x0B5);
-	else if (mapName == gFlagSecName_FuchsiaCity)
-		return FlagGet(FLAG_0x0B6);
-	else if (mapName == gFlagSecName_CinnabarIsland)
-		return FlagGet(FLAG_0x0B7);
-	else if (mapName == gFlagSecName_IndigoPlateau)
-		return FlagGet(FLAG_0x0B8);
-	else if (mapName == gFlagSecName_SaffronCity)
-		return FlagGet(FLAG_0x0B9);
-	else if (mapName == gFlagSecName_Route1)
-		return FlagGet(FLAG_0x0BA);
-	else if (mapName == gFlagSecName_Route2)
-		return FlagGet(FLAG_0x0BB);
-	else if (mapName == gFlagSecName_Route3)
-		return FlagGet(FLAG_0x0BC);
-	else if (mapName == gFlagSecName_Route4)
-		return FlagGet(FLAG_0x0BD);
-	else if (mapName == gFlagSecName_Route5)
-		return FlagGet(FLAG_0x0BE);
-	else if (mapName == gFlagSecName_Route6)
-		return FlagGet(FLAG_0x0BF);
-	else if (mapName == gFlagSecName_Route7)
-		return FlagGet(FLAG_0x0C0);
-	else if (mapName == gFlagSecName_Route8)
-		return FlagGet(FLAG_0x0C1);
-	else if (mapName == gFlagSecName_Route9)
-		return FlagGet(FLAG_0x0C2);
-	else if (mapName == gFlagSecName_Route10)
-		return FlagGet(FLAG_0x0C3);
-	else if (mapName == gFlagSecName_Route11)
-		return FlagGet(FLAG_0x0C4);
-	else if (mapName == gFlagSecName_Route12)
-		return FlagGet(FLAG_0x0C5);
-	else if (mapName == gFlagSecName_Route13)
-		return FlagGet(FLAG_0x0C6);
-	else if (mapName == gFlagSecName_Route14)
-		return FlagGet(FLAG_0x0C7);
-	else if (mapName == gFlagSecName_Route15)
-		return FlagGet(FLAG_0x0C8);
-	else if (mapName == gFlagSecName_Route16)
-		return FlagGet(FLAG_0x0C9);
-	else if (mapName == gFlagSecName_Route17)
-		return FlagGet(FLAG_0x0CA);
-	else if (mapName == gFlagSecName_Route18)
-		return FlagGet(FLAG_0x0CB);
-	else if (mapName == gFlagSecName_Route19)
-		return FlagGet(FLAG_0x0CC);
-	else if (mapName == gFlagSecName_Route20)
-		return FlagGet(FLAG_0x0CD);
-	else if (mapName == gFlagSecName_Route21)
-		return FlagGet(FLAG_0x0CE);
-	else if (mapName == gFlagSecName_Route22)
-		return FlagGet(FLAG_0x0CF);
-	else if (mapName == gFlagSecName_Route23)
-		return FlagGet(FLAG_0x0D0);
-	else if (mapName == gFlagSecName_Route24)
-		return FlagGet(FLAG_0x0D1);
-	else if (mapName == gFlagSecName_Route25)
-		return FlagGet(FLAG_0x0D2);
+int u8strcmp(char* a, u8 *b)
+{
+	s32 i;
+	for (i = 0; i < strlen(b); i++) {
+		if (a[i] == b[i])
+			continue;
+		else
+			return -1;
+	}
+	return 0;
+}
+
+/* reverse:  reverse string s in place */
+void reverse(char s[])
+{
+	int i, j;
+	char c;
+
+	for (i = 0, j = strlen(s) - 1; i < j; i++, j--) {
+		c = s[i];
+		s[i] = s[j];
+		s[j] = c;
+	}
+}
+
+void itoa(int n, char s[])
+{
+	int i, sign;
+
+	if ((sign = n) < 0)  /* record sign */
+		n = -n;          /* make n positive */
+	i = 0;
+	do {       /* generate digits in reverse order */
+		s[i++] = n % 10 + '0';   /* get next digit */
+	} while ((n /= 10) > 0);     /* delete it */
+	if (sign < 0)
+		s[i++] = '-';
+	s[i] = '\0';
+	reverse(s);
+}
+
+bool8 SetMapFlag(u8 mapNameU8[]) {
+	u8 work[25] = _("Set worked");
+	u8 prob[25] = _("Set prob");
+	char* mapName = (char*)mapNameU8;
+	u16 result;
+	if (strcmp(mapName, gFlagSecName_PalletTown) == 0 )
+		result = FLAG_0x0AF;
+	 else if (strcmp(mapName, gFlagSecName_ViridianCity) == 0 )
+		result = FLAG_0x0B0;
+ 	 else if (strcmp(mapName, gFlagSecName_PewterCity) == 0 )
+		result = FLAG_0x0B1;
+ 	 else if (strcmp(mapName, gFlagSecName_CeruleanCity) == 0 )
+		result = FLAG_0x0B2;
+     else if (strcmp(mapName, gFlagSecName_LavenderTown) == 0 )
+		result = FLAG_0x0B3;
+	 else if (strcmp(mapName, gFlagSecName_VermilionCity) == 0 )
+		result = FLAG_0x0B4;
+	 else if (strcmp(mapName, gFlagSecName_CeladonCity) == 0 )
+		result = FLAG_0x0B5;
+	 else if (strcmp(mapName, gFlagSecName_FuchsiaCity) == 0 )
+		result = FLAG_0x0B6;
+	 else if (strcmp(mapName, gFlagSecName_CinnabarIsland) == 0 )
+		result = FLAG_0x0B7;
+	 else if (strcmp(mapName, gFlagSecName_IndigoPlateau) == 0 )
+		result = FLAG_0x0B8;
+	 else if (strcmp(mapName, gFlagSecName_SaffronCity) == 0 )
+		result = FLAG_0x0B9;
+	 else if (strcmp(mapName, gFlagSecName_Route1) == 0 )
+		result = FLAG_0x0BA;
+	 else if (strcmp(mapName, gFlagSecName_Route2) == 0 ) 
+		result = FLAG_0x0BB;
+	 else if (strcmp(mapName, gFlagSecName_Route3) == 0 )
+		result = FLAG_0x0BC;
+	 else if (strcmp(mapName, gFlagSecName_Route4) == 0 )
+		result = FLAG_0x0BD;
+	 else if (strcmp(mapName, gFlagSecName_Route5) == 0 )
+		result = FLAG_0x0BE;
+	 else if (strcmp(mapName, gFlagSecName_Route6) == 0 )
+		result = FLAG_0x0BF;
+	 else if (strcmp(mapName, gFlagSecName_Route7) == 0 )
+		result = FLAG_0x0C0;
+	 else if (strcmp(mapName, gFlagSecName_Route8) == 0 )
+		result = FLAG_0x0C1;
+	 else if (strcmp(mapName, gFlagSecName_Route9) == 0 )
+		result = FLAG_0x0C2;
+	 else if (strcmp(mapName, gFlagSecName_Route10) == 0 )
+		result = FLAG_0x0C3;
+	 else if (strcmp(mapName, gFlagSecName_Route11) == 0 )
+		result = FLAG_0x0C4;
+	 else if (strcmp(mapName, gFlagSecName_Route12) == 0 )
+		result = FLAG_0x0C5;
+	 else if (strcmp(mapName, gFlagSecName_Route13) == 0 )
+		result = FLAG_0x0C6;
+	 else if (strcmp(mapName, gFlagSecName_Route14) == 0 )
+		result = FLAG_0x0C7;
+	 else if (strcmp(mapName, gFlagSecName_Route15) == 0 )
+		result = FLAG_0x0C8;
+	 else if (strcmp(mapName, gFlagSecName_Route16) == 0 )
+		result = FLAG_0x0C9;
+	 else if (strcmp(mapName, gFlagSecName_Route17) == 0 )
+		result = FLAG_0x0CA;
+	 else if (strcmp(mapName, gFlagSecName_Route18) == 0 )
+		result = FLAG_0x0CB;
+	 else if (strcmp(mapName, gFlagSecName_Route19) == 0 )
+		result = FLAG_0x0CC;
+	 else if (strcmp(mapName, gFlagSecName_Route20) == 0 )
+		result = FLAG_0x0CD;
+	 else if (strcmp(mapName, gFlagSecName_Route21) == 0 )
+		result = FLAG_0x0CE;
+	 else if (strcmp(mapName, (char*)gFlagSecName_Route22) == 0) {
+		 SetMonData(&gPlayerParty[1], MON_DATA_NICKNAME, work);
+		 result = FLAG_0x200;
+	 }
+	 else if (strcmp(mapName, gFlagSecName_Route23) == 0 )
+		result = FLAG_0x0D0;
+	 else if (strcmp(mapName, gFlagSecName_Route24) == 0 )
+		result = FLAG_0x0D1;
+	 else if (strcmp(mapName, gFlagSecName_Route25) == 0 )
+		result = FLAG_0x0D2;
+	return FlagSet(result);
 };
 
-bool8 SetMapFlag(u8* mapName) {
-	if (mapName == gFlagSecName_PalletTown)
-		return FlagSet(FLAG_0x0AF);
-	else if (mapName == gFlagSecName_ViridianCity)
-		return FlagSet(FLAG_0x0B0);
-	else if (mapName == gFlagSecName_PewterCity)
-		return FlagSet(FLAG_0x0B1);
-	else if (mapName == gFlagSecName_CeruleanCity)
-		return FlagSet(FLAG_0x0B2);
-	else if (mapName == gFlagSecName_LavenderTown)
-		return FlagSet(FLAG_0x0B3);
-	else if (mapName == gFlagSecName_VermilionCity)
-		return FlagSet(FLAG_0x0B4);
-	else if (mapName == gFlagSecName_CeladonCity)
-		return FlagSet(FLAG_0x0B5);
-	else if (mapName == gFlagSecName_FuchsiaCity)
-		return FlagSet(FLAG_0x0B6);
-	else if (mapName == gFlagSecName_CinnabarIsland)
-		return FlagSet(FLAG_0x0B7);
-	else if (mapName == gFlagSecName_IndigoPlateau)
-		return FlagSet(FLAG_0x0B8);
-	else if (mapName == gFlagSecName_SaffronCity)
-		return FlagSet(FLAG_0x0B9);
-	else if (mapName == gFlagSecName_Route1)
-		return FlagSet(FLAG_0x0BA);
-	else if (mapName == gFlagSecName_Route2)
-		return FlagSet(FLAG_0x0BB);
-	else if (mapName == gFlagSecName_Route3)
-		return FlagSet(FLAG_0x0BC);
-	else if (mapName == gFlagSecName_Route4)
-		return FlagSet(FLAG_0x0BD);
-	else if (mapName == gFlagSecName_Route5)
-		return FlagSet(FLAG_0x0BE);
-	else if (mapName == gFlagSecName_Route6)
-		return FlagSet(FLAG_0x0BF);
-	else if (mapName == gFlagSecName_Route7)
-		return FlagSet(FLAG_0x0C0);
-	else if (mapName == gFlagSecName_Route8)
-		return FlagSet(FLAG_0x0C1);
-	else if (mapName == gFlagSecName_Route9)
-		return FlagSet(FLAG_0x0C2);
-	else if (mapName == gFlagSecName_Route10)
-		return FlagSet(FLAG_0x0C3);
-	else if (mapName == gFlagSecName_Route11)
-		return FlagSet(FLAG_0x0C4);
-	else if (mapName == gFlagSecName_Route12)
-		return FlagSet(FLAG_0x0C5);
-	else if (mapName == gFlagSecName_Route13)
-		return FlagSet(FLAG_0x0C6);
-	else if (mapName == gFlagSecName_Route14)
-		return FlagSet(FLAG_0x0C7);
-	else if (mapName == gFlagSecName_Route15)
-		return FlagSet(FLAG_0x0C8);
-	else if (mapName == gFlagSecName_Route16)
-		return FlagSet(FLAG_0x0C9);
-	else if (mapName == gFlagSecName_Route17)
-		return FlagSet(FLAG_0x0CA);
-	else if (mapName == gFlagSecName_Route18)
-		return FlagSet(FLAG_0x0CB);
-	else if (mapName == gFlagSecName_Route19)
-		return FlagSet(FLAG_0x0CC);
-	else if (mapName == gFlagSecName_Route20)
-		return FlagSet(FLAG_0x0CD);
-	else if (mapName == gFlagSecName_Route21)
-		return FlagSet(FLAG_0x0CE);
-	else if (mapName == gFlagSecName_Route22)
-		return FlagSet(FLAG_0x0CF);
-	else if (mapName == gFlagSecName_Route23)
-		return FlagSet(FLAG_0x0D0);
-	else if (mapName == gFlagSecName_Route24)
-		return FlagSet(FLAG_0x0D1);
-	else if (mapName == gFlagSecName_Route25)
-		return FlagSet(FLAG_0x0D2);
+bool8 GetMapFlag(u8 mapName[]) {
+	u8 work[25] = _("Get worked");
+	u8 prob[25] = _("Get prob"); 
+	u8 plswork[25] = _("Get prob");
+	u8 WHYYYY[25] = _("STOP IT NOW");
+	bool8 result;
+	//char* test = (char*)*mapName;
+	//char* mapName = mapNameU8;
+	SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, mapName);
+	//strlen(mapName) != strlen(gFlagSecName_Route22)
+	if (strcmp(mapName, "ROUTE 22") == 0)
+		SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, work);
+	if (strcmp(mapName, gFlagSecName_PalletTown) == 0) {
+		//SetMonData(&gPlayerParty[1], MON_DATA_NICKNAME, prob);
+		result = FlagGet(FLAG_0x0AF);
+	}
+	 else if (strcmp(mapName, gFlagSecName_ViridianCity) == 0 )
+		result = FlagGet(FLAG_0x0B0);
+	 else if (strcmp(mapName, gFlagSecName_PewterCity) == 0 )
+		result = FlagGet(FLAG_0x0B1);
+	 else if (strcmp(mapName, gFlagSecName_CeruleanCity) == 0 )
+		result = FlagGet(FLAG_0x0B2);
+	 else if (strcmp(mapName, gFlagSecName_LavenderTown) == 0 )
+		result = FlagGet(FLAG_0x0B3);
+	 else if (strcmp(mapName, gFlagSecName_VermilionCity) == 0 )
+		result = FlagGet(FLAG_0x0B4);
+	 else if (strcmp(mapName, gFlagSecName_CeladonCity) == 0 )
+		result = FlagGet(FLAG_0x0B5);
+	 else if (strcmp(mapName, gFlagSecName_FuchsiaCity) == 0 )
+		result = FlagGet(FLAG_0x0B6);
+	 else if (strcmp(mapName, gFlagSecName_CinnabarIsland) == 0 )
+		result = FlagGet(FLAG_0x0B7);
+	 else if (strcmp(mapName, gFlagSecName_IndigoPlateau) == 0 )
+		result = FlagGet(FLAG_0x0B8);
+	 else if (strcmp(mapName, gFlagSecName_SaffronCity) == 0 )
+		result = FlagGet(FLAG_0x0B9);
+	 else if (strcmp(mapName, gFlagSecName_Route1) == 0 ) 
+		result = FlagGet(FLAG_0x0BA);
+	 else if (strcmp(mapName, gFlagSecName_Route2) == 0 )
+		result = FlagGet(FLAG_0x0BB);
+	 else if (strcmp(mapName, gFlagSecName_Route3) == 0 )
+		result = FlagGet(FLAG_0x0BC);
+	 else if (strcmp(mapName, gFlagSecName_Route4) == 0 )
+		result = FlagGet(FLAG_0x0BD);
+	 else if (strcmp(mapName, gFlagSecName_Route5) == 0 )
+		result = FlagGet(FLAG_0x0BE);
+	 else if (strcmp(mapName, gFlagSecName_Route6) == 0 )
+		result = FlagGet(FLAG_0x0BF);
+	 else if (strcmp(mapName, gFlagSecName_Route7) == 0 )
+		result = FlagGet(FLAG_0x0C0);
+	 else if (strcmp(mapName, gFlagSecName_Route8) == 0 )
+		result = FlagGet(FLAG_0x0C1);
+	 else if (strcmp(mapName, gFlagSecName_Route9) == 0 )
+		result = FlagGet(FLAG_0x0C2);
+	 else if (strcmp(mapName, gFlagSecName_Route10) == 0 )
+		result = FlagGet(FLAG_0x0C3);
+	 else if (strcmp(mapName, gFlagSecName_Route11) == 0 )
+		result = FlagGet(FLAG_0x0C4);
+	 else if (strcmp(mapName, gFlagSecName_Route12) == 0 )
+		result = FlagGet(FLAG_0x0C5);
+	 else if (strcmp(mapName, gFlagSecName_Route13) == 0 )
+		result = FlagGet(FLAG_0x0C6);
+	 else if (strcmp(mapName, gFlagSecName_Route14) == 0 )
+		result = FlagGet(FLAG_0x0C7);
+	 else if (strcmp(mapName, gFlagSecName_Route15) == 0 )
+		result = FlagGet(FLAG_0x0C8);
+	 else if (strcmp(mapName, gFlagSecName_Route16) == 0 )
+		result = FlagGet(FLAG_0x0C9);
+	 else if (strcmp(mapName, gFlagSecName_Route17) == 0 )
+		result = FlagGet(FLAG_0x0CA);
+	 else if (strcmp(mapName, gFlagSecName_Route18) == 0 )
+		result = FlagGet(FLAG_0x0CB);
+	 else if (strcmp(mapName, gFlagSecName_Route19) == 0 )
+		result = FlagGet(FLAG_0x0CC);
+	 else if (strcmp(mapName, gFlagSecName_Route20) == 0 )
+		result = FlagGet(FLAG_0x0CD);
+	 else if (strcmp(mapName, gFlagSecName_Route21) == 0 )
+		result = FlagGet(FLAG_0x0CE);
+	 else if (strcmp(mapName, gFlagSecName_Route22) == 0) {
+		 result = FlagGet(FLAG_0x200);
+		 SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, work);
+	 }
+	 else if (strcmp(mapName, gFlagSecName_Route23) == 0 )
+		result = FlagGet(FLAG_0x0D0);
+	 else if (strcmp(mapName, gFlagSecName_Route24) == 0 )
+		result = FlagGet(FLAG_0x0D1);
+	 else if (strcmp(mapName, gFlagSecName_Route25) == 0 ) 
+		 result = FlagGet(FLAG_0x0D2);
+	return result;
 };
 
 static u8 ChooseWildMonIndex_Land(void)
@@ -496,15 +561,15 @@ static void GenerateWildMon(u16 species, u8 level, u8 slot)
 	bool8 isEgg;
 	u8 mapName[25];
 	u32 mapID = GetCurrentRegionMapSectionId();
-	u8 *ptr = GetMapName(mapName, mapID, 0);
+	u8 *ptr = GetMapName(mapName, gMapHeader.regionMapSectionId, 0);
     ZeroEnemyPartyMons();
     if (species != SPECIES_UNOWN)
     {
         CreateMonWithNature(&gEnemyParty[0], species, level, 32, Random() % 25);
+		//SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, mapName);
 		if (!GetMapFlag(mapName)) {
 			isEgg = TRUE;
 			SetMonData(&gEnemyParty[0], MON_DATA_IS_EGG, &isEgg);
-			//SetMonData(&gEnemyParty[0], MON_DATA_NICKNAME, mapName);
 		}
     }
     else
