@@ -19,6 +19,10 @@
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/flags.h"
+#include "overworld.h"
+#include "wild_encounter.h"
+#include "region_map.h"
+
 
 static bool8 ShouldAnimBeDoneRegardlessOfSubsitute(u8 animId);
 static void Task_ClearBitWhenBattleTableAnimDone(u8 taskId);
@@ -324,6 +328,9 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battlerId)
     u16 paletteOffset;
     const void *lzPaletteData;
     void *buffer;
+	u8 mapName[25];
+	u32 mapID = GetCurrentRegionMapSectionId();
+	u8 *ptr = GetMapName(mapName, mapID, 0);
 
     monsPersonality = GetMonData(mon, MON_DATA_PERSONALITY);
     if (gBattleSpritesDataPtr->battlerData[battlerId].transformSpecies == SPECIES_NONE)
@@ -336,7 +343,7 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battlerId)
         species = gBattleSpritesDataPtr->battlerData[battlerId].transformSpecies;
         currentPersonality = gTransformedPersonalities[battlerId];
     }
-	if (!FlagGet(FLAG_0x300))
+	if (!GetMapFlag(mapName))
 		species = 412;
     otId = GetMonData(mon, MON_DATA_OT_ID);
     position = GetBattlerPosition(battlerId);
