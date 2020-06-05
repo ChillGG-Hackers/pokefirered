@@ -31,33 +31,33 @@ const u8 gFlagSecName_FuchsiaCity[] = _("FUCHSIA CITY");
 const u8 gFlagSecName_CinnabarIsland[] = _("CINNABAR ISLAND");
 const u8 gFlagSecName_IndigoPlateau[] = _("INDIGO PLATEAU");
 const u8 gFlagSecName_SaffronCity[] = _("SAFFRON CITY");
-const u8 gFlagSecName_Route4[] = _("ROUTE 4");
-const u8 gFlagSecName_Route10[] = _("ROUTE 10");
-const u8 gFlagSecName_Route1[] = _("ROUTE 1");
-const u8 gFlagSecName_Route2[] = _("ROUTE 2");
-const u8 gFlagSecName_Route3[] = _("ROUTE 3");
-const u8 gFlagSecName_Route4_2[] = _("ROUTE 4");
-const u8 gFlagSecName_Route5[] = _("ROUTE 5");
-const u8 gFlagSecName_Route6[] = _("ROUTE 6");
-const u8 gFlagSecName_Route7[] = _("ROUTE 7");
-const u8 gFlagSecName_Route8[] = _("ROUTE 8");
-const u8 gFlagSecName_Route9[] = _("ROUTE 9");
-const u8 gFlagSecName_Route10_2[] = _("ROUTE 10");
-const u8 gFlagSecName_Route11[] = _("ROUTE 11");
-const u8 gFlagSecName_Route12[] = _("ROUTE 12");
-const u8 gFlagSecName_Route13[] = _("ROUTE 13");
-const u8 gFlagSecName_Route14[] = _("ROUTE 14");
-const u8 gFlagSecName_Route15[] = _("ROUTE 15");
-const u8 gFlagSecName_Route16[] = _("ROUTE 16");
-const u8 gFlagSecName_Route17[] = _("ROUTE 17");
-const u8 gFlagSecName_Route18[] = _("ROUTE 18");
-const u8 gFlagSecName_Route19[] = _("ROUTE 19");
-const u8 gFlagSecName_Route20[] = _("ROUTE 20");
-const u8 gFlagSecName_Route21[] = _("ROUTE 21");
+const u8 gFlagSecName_Route4[] = "ROUTE 4";
+const u8 gFlagSecName_Route10[] = "ROUTE 10";
+const u8 gFlagSecName_Route1[] = "ROUTE 1";
+const u8 gFlagSecName_Route2[] = "ROUTE 2";
+const u8 gFlagSecName_Route3[] = "ROUTE 3";
+const u8 gFlagSecName_Route4_2[] = "ROUTE 4";
+const u8 gFlagSecName_Route5[] = "ROUTE 5";
+const u8 gFlagSecName_Route6[] = "ROUTE 6";
+const u8 gFlagSecName_Route7[] = "ROUTE 7";
+const u8 gFlagSecName_Route8[] = "ROUTE 8";
+const u8 gFlagSecName_Route9[] = "ROUTE 9";
+const u8 gFlagSecName_Route10_2[] = "ROUTE 10";
+const u8 gFlagSecName_Route11[] = "ROUTE 11";
+const u8 gFlagSecName_Route12[] = "ROUTE 12";
+const u8 gFlagSecName_Route13[] = "ROUTE 13";
+const u8 gFlagSecName_Route14[] = "ROUTE 14";
+const u8 gFlagSecName_Route15[] = "ROUTE 15";
+const u8 gFlagSecName_Route16[] = "ROUTE 16";
+const u8 gFlagSecName_Route17[] = "ROUTE 17";
+const u8 gFlagSecName_Route18[] = "ROUTE 18";
+const u8 gFlagSecName_Route19[] = "ROUTE 19";
+const u8 gFlagSecName_Route20[] = "ROUTE 20";
+const u8 gFlagSecName_Route21[] = "ROUTE 21";
 const u8 gFlagSecName_Route22[] = "ROUTE 22";
-const u8 gFlagSecName_Route23[] = _("ROUTE 23");
-const u8 gFlagSecName_Route24[] = _("ROUTE 24");
-const u8 gFlagSecName_Route25[] = _("ROUTE 25");
+const u8 gFlagSecName_Route23[] = "ROUTE 23";
+const u8 gFlagSecName_Route24[] = "ROUTE 24";
+const u8 gFlagSecName_Route25[] = "ROUTE 25";
 const u8 gFlagSecName_ViridianForest[] = _("VIRIDIAN FOREST");
 const u8 gFlagSecName_MtMoon[] = _("MT. MOON");
 const u8 gFlagSecName_SSAnne[] = _("S.S. ANNE");
@@ -178,18 +178,6 @@ void DisableWildEncounters(bool8 state)
     sWildEncountersDisabled = state;
 }
 
-int u8strcmp(char* a, u8 *b)
-{
-	s32 i;
-	for (i = 0; i < strlen(b); i++) {
-		if (a[i] == b[i])
-			continue;
-		else
-			return -1;
-	}
-	return 0;
-}
-
 /* reverse:  reverse string s in place */
 void reverse(char s[])
 {
@@ -301,22 +289,45 @@ bool8 SetMapFlag(u8 mapNameU8[]) {
 	return FlagSet(result);
 };
 
-bool8 GetMapFlag(u8 mapName[]) {
+u8* my_strncpy(u8* holder, const u8* copiedFrom, s32 len) {
+	s32 i;
+	for (i = 0; i < len; i++) {
+		holder[i] = copiedFrom[i];
+	}
+	return holder;
+}
+
+void removeChar(u8 *str, u8 c) {
+	int i = 0;
+	int j = 0;
+
+	while (str[i]) {
+		if (str[i] != c) {
+			str[j++] = str[i];
+		}
+		i++;
+	}
+	str[j] = 0;
+}
+
+bool8 GetMapFlag(u8 mapNameU8[]) {
 	u8 work[25] = _("Get worked");
 	u8 prob[25] = _("Get prob"); 
-	u8 plswork[25] = _("Get prob");
-	u8 WHYYYY[25] = _("STOP IT NOW");
+
 	bool8 result;
-	//char* test = (char*)*mapName;
-	//char* mapName = mapNameU8;
-	SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, mapName);
-	//strlen(mapName) != strlen(gFlagSecName_Route22)
-	if (strcmp(mapName, "ROUTE 22") == 0)
+	u8 oldName[25];
+	u8 mapName[25];
+	removeChar(mapNameU8, 0x00);
+	// If this BS works someone has got to suffer...
+	GetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, oldName);
+	SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, mapNameU8);	
+	//GetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, mapName);
+	//SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, oldName);
+
+	if (strcmp(mapName, gFlagSecName_Route22) == 0)
 		SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, work);
-	if (strcmp(mapName, gFlagSecName_PalletTown) == 0) {
-		//SetMonData(&gPlayerParty[1], MON_DATA_NICKNAME, prob);
+	if (strcmp(mapName, gFlagSecName_PalletTown) == 1) 
 		result = FlagGet(FLAG_0x0AF);
-	}
 	 else if (strcmp(mapName, gFlagSecName_ViridianCity) == 0 )
 		result = FlagGet(FLAG_0x0B0);
 	 else if (strcmp(mapName, gFlagSecName_PewterCity) == 0 )
@@ -337,8 +348,11 @@ bool8 GetMapFlag(u8 mapName[]) {
 		result = FlagGet(FLAG_0x0B8);
 	 else if (strcmp(mapName, gFlagSecName_SaffronCity) == 0 )
 		result = FlagGet(FLAG_0x0B9);
-	 else if (strcmp(mapName, gFlagSecName_Route1) == 0 ) 
+	 else if (strcmp(mapName, gFlagSecName_Route1) == 0) {
+		SetMonData(&gPlayerParty[1], MON_DATA_NICKNAME, gFlagSecName_Route1);
+		SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, prob);
 		result = FlagGet(FLAG_0x0BA);
+	}
 	 else if (strcmp(mapName, gFlagSecName_Route2) == 0 )
 		result = FlagGet(FLAG_0x0BB);
 	 else if (strcmp(mapName, gFlagSecName_Route3) == 0 )
@@ -375,13 +389,17 @@ bool8 GetMapFlag(u8 mapName[]) {
 		result = FlagGet(FLAG_0x0CB);
 	 else if (strcmp(mapName, gFlagSecName_Route19) == 0 )
 		result = FlagGet(FLAG_0x0CC);
-	 else if (strcmp(mapName, gFlagSecName_Route20) == 0 )
+	 else if (strcmp(mapName, gFlagSecName_Route20) == 0 ) {
+		SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, prob);
+		SetMonData(&gPlayerParty[1], MON_DATA_NICKNAME, gFlagSecName_Route20);
 		result = FlagGet(FLAG_0x0CD);
+	 }		
 	 else if (strcmp(mapName, gFlagSecName_Route21) == 0 )
 		result = FlagGet(FLAG_0x0CE);
 	 else if (strcmp(mapName, gFlagSecName_Route22) == 0) {
-		 result = FlagGet(FLAG_0x200);
 		 SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, work);
+		 SetMonData(&gPlayerParty[1], MON_DATA_NICKNAME, gFlagSecName_Route22);
+		 result = FlagGet(FLAG_0x200);		 
 	 }
 	 else if (strcmp(mapName, gFlagSecName_Route23) == 0 )
 		result = FlagGet(FLAG_0x0D0);
@@ -567,7 +585,7 @@ static void GenerateWildMon(u16 species, u8 level, u8 slot)
     {
         CreateMonWithNature(&gEnemyParty[0], species, level, 32, Random() % 25);
 		//SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, mapName);
-		if (!GetMapFlag(mapName)) {
+		if (!GetMapFlag(ptr)) {
 			isEgg = TRUE;
 			SetMonData(&gEnemyParty[0], MON_DATA_IS_EGG, &isEgg);
 		}
