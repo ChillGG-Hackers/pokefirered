@@ -9341,7 +9341,6 @@ static void atkEF_handleballthrow(void)
 				{
 					BtlController_EmitBallThrowAnim(0, BALL_3_SHAKES_SUCCESS);
 					MarkBattlerForControllerExec(gActiveBattler);
-					SetMapFlag(mapName);
 					gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
 					SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_POKEBALL, &gLastUsedItem);
 					if (CalculatePlayerPartyCount() == 6)
@@ -9361,8 +9360,7 @@ static void atkEF_handleballthrow(void)
 					BtlController_EmitBallThrowAnim(0, shakes);
 					MarkBattlerForControllerExec(gActiveBattler);			
 					if (shakes == BALL_3_SHAKES_SUCCESS) // mon caught, copy of the code above
-					{
-						SetMapFlag(mapName);
+					{						
 						gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
 						SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_POKEBALL, &gLastUsedItem);
 						if (CalculatePlayerPartyCount() == 6)
@@ -9383,6 +9381,9 @@ static void atkEF_handleballthrow(void)
 
 static void atkF0_givecaughtmon(void)
 {
+	//u8 mapName[25];
+	//u32 mapID = GetCurrentRegionMapSectionId();
+	//u8 *ptr = GetMapName(mapName, mapID, 0);
     if (GiveMonToPlayer(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ BIT_SIDE]]) != MON_GIVEN_TO_PARTY)
     {
         if (!ShouldShowBoxWasFullMessage())
@@ -9401,6 +9402,7 @@ static void atkF0_givecaughtmon(void)
         if (FlagGet(FLAG_SYS_NOT_SOMEONES_PC))
             ++gBattleCommunication[MULTISTRING_CHOOSER];
     }
+	//SetMapFlag(mapName);
     gBattleResults.caughtMonSpecies = gBattleMons[gBattlerAttacker ^ BIT_SIDE].species;
     GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ BIT_SIDE]], MON_DATA_NICKNAME, gBattleResults.caughtMonNick);
     ++gBattlescriptCurrInstr;

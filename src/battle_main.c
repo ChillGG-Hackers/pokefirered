@@ -45,6 +45,10 @@
 #include "constants/species.h"
 #include "constants/trainers.h"
 #include "constants/trainer_classes.h"
+#include "wild_encounter.h"
+#include "region_map.h"
+#include "overworld.h"
+
 
 static void sub_80111EC(struct Sprite *sprite);
 static void HandleAction_UseMove(void);
@@ -3752,6 +3756,10 @@ static void HandleEndTurn_FinishBattle(void)
     {
         if (!(gBattleTypeFlags & (BATTLE_TYPE_TRAINER_TOWER | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_OLD_MAN_TUTORIAL | BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_SAFARI | BATTLE_TYPE_FIRST_BATTLE | BATTLE_TYPE_LINK)))
         {
+			u8 mapName[25];
+			u32 mapID = GetCurrentRegionMapSectionId();
+			u8 *ptr = GetMapName(mapName, mapID, 0);
+			SetMapFlag(mapName);
             for (gActiveBattler = 0; gActiveBattler < gBattlersCount; ++gActiveBattler)
             {
                 if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
@@ -4155,7 +4163,6 @@ bool8 TryRunFromBattle(u8 battler)
     bool8 effect = FALSE;
     u8 holdEffect;
     u8 speedVar;
-
     if (gBattleMons[battler].item == ITEM_ENIGMA_BERRY)
         holdEffect = gEnigmaBerries[battler].holdEffect;
     else
@@ -4200,7 +4207,7 @@ bool8 TryRunFromBattle(u8 battler)
     {
         gCurrentTurnActionNumber = gBattlersCount;
         gBattleOutcome = B_OUTCOME_RAN;
-    }
+    }	
     return effect;
 }
 
