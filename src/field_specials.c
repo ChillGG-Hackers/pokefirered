@@ -1518,9 +1518,9 @@ void ForcePlayerToStartSurfing(void)
 }
 
 static const u16 sStarterSpecies[] = {
-    SPECIES_BULBASAUR,
-    SPECIES_SQUIRTLE,
-    SPECIES_CHARMANDER
+	(u16)(((SPECIES_BULBASAUR * 11035245 + 12345) / 65536)%411)+1,
+	(((u16)(SPECIES_SQUIRTLE * 11015245 + 12345) / 65536) % 411)+1,
+	(u16)(((SPECIES_CHARMANDER * 13515245 + 12345) / 65536) % 411)+1
 };
 
 static u16 GetStarterSpeciesById(u16 idx)

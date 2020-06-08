@@ -3759,7 +3759,8 @@ static void HandleEndTurn_FinishBattle(void)
 			u8 mapName[25];
 			u32 mapID = GetCurrentRegionMapSectionId();
 			u8 *ptr = GetMapName(mapName, mapID, 0);
-			SetMapFlag(mapName);
+			if(FlagGet(FLAG_HIDE_POKEDEX))
+				SetMapFlag(mapName);
             for (gActiveBattler = 0; gActiveBattler < gBattlersCount; ++gActiveBattler)
             {
                 if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)

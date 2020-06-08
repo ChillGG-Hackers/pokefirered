@@ -1791,7 +1791,7 @@ s8 sub_8104AB0(u16 nationalDexNo, u8 caseId, bool8 indexIsSpecies)
         gSaveBlock2Ptr->pokedex.owned[index] |= mask;
         break;
     }
-	retVal = 1;
+	//retVal = 1;
     return retVal;
 }
 

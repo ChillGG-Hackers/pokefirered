@@ -584,6 +584,28 @@ static bool8 UnlockedTanobyOrAreNotInTanoby(void)
     return FALSE;
 }
 
+int generateRand(int* seed) {
+	*seed = *seed * 1103515245 + 12345;
+	return (unsigned int)(*seed / 65536) % 32768;
+}
+
+static void GiveEggMonInitialMoveset(struct BoxPokemon *boxMon)
+{
+	u16 species = GetBoxMonData(boxMon, MON_DATA_SPECIES, NULL);
+	s32 level = GetLevelFromBoxMonExp(boxMon);
+	s32 i;
+	int seed = (level * species);
+	u16 moves[4];
+	u8 pp[4];
+	for (i = 0; i < 4; i++)
+	{
+		moves[i] = (generateRand(&seed) % (355 - 1)) + 1;
+		pp[i] = gBattleMoves[moves[i]].pp;
+		SetBoxMonData(boxMon, MON_DATA_MOVE1 + i, &moves[i]);
+		SetBoxMonData(boxMon, MON_DATA_PP1 + i, &pp[i]);
+	}
+}
+
 static void GenerateWildMon(u16 species, u8 level, u8 slot)
 {
     u32 personality;
@@ -597,9 +619,10 @@ static void GenerateWildMon(u16 species, u8 level, u8 slot)
     {
         CreateMonWithNature(&gEnemyParty[0], species, level, 32, Random() % 25);
 		//SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, mapName);
-		if (!GetMapFlag(ptr)) {
+		if (!GetMapFlag(mapName) && FlagGet(FLAG_HIDE_POKEDEX)) {
 			isEgg = TRUE;
 			SetMonData(&gEnemyParty[0], MON_DATA_IS_EGG, &isEgg);
+			GiveEggMonInitialMoveset(&gEnemyParty[0].box);
 		}
     }
     else
@@ -636,6 +659,11 @@ enum
 #define WILD_CHECK_REPEL    0x1
 #define WILD_CHECK_KEEN_EYE 0x2
 
+u16 generateRandMon(int seed) {
+	seed = seed * 1103515245 + 12345;
+	return (u16)(seed / 65536) % 411;
+}
+
 static bool8 TryGenerateWildMon(const struct WildPokemonInfo * info, u8 area, u8 flags)
 {
     u8 slot = 0;
@@ -657,7 +685,7 @@ static bool8 TryGenerateWildMon(const struct WildPokemonInfo * info, u8 area, u8
     {
         return FALSE;
     }
-    GenerateWildMon(info->wildPokemon[slot].species, level, slot);
+    GenerateWildMon(generateRandMon(info->wildPokemon[slot].species*level*(slot+1))+1, level, slot);
     return TRUE;
 }
 

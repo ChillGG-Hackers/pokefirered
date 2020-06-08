@@ -4,6 +4,7 @@
 #include "util.h"
 #include "random.h"
 #include "pokedex.h"
+#include "pokemon.h"
 #include "money.h"
 #include "pokemon_icon.h"
 #include "mail.h"
@@ -9381,9 +9382,14 @@ static void atkEF_handleballthrow(void)
 
 static void atkF0_givecaughtmon(void)
 {
-	//u8 mapName[25];
-	//u32 mapID = GetCurrentRegionMapSectionId();
-	//u8 *ptr = GetMapName(mapName, mapID, 0);
+	u16 move_none[1] = { 0 };
+	s32 i;
+	for (i = 0; i < 4; i++)
+	{
+		SetBoxMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ BIT_SIDE]].box, MON_DATA_MOVE1 + i, &move_none[0]);
+		//SetBoxMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ BIT_SIDE]].box, MON_DATA_MOVE1 + i, 0);
+	}
+	GiveMonInitialMoveset(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ BIT_SIDE]]);
     if (GiveMonToPlayer(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ BIT_SIDE]]) != MON_GIVEN_TO_PARTY)
     {
         if (!ShouldShowBoxWasFullMessage())
@@ -9402,7 +9408,6 @@ static void atkF0_givecaughtmon(void)
         if (FlagGet(FLAG_SYS_NOT_SOMEONES_PC))
             ++gBattleCommunication[MULTISTRING_CHOOSER];
     }
-	//SetMapFlag(mapName);
     gBattleResults.caughtMonSpecies = gBattleMons[gBattlerAttacker ^ BIT_SIDE].species;
     GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ BIT_SIDE]], MON_DATA_NICKNAME, gBattleResults.caughtMonNick);
     ++gBattlescriptCurrInstr;
@@ -9412,7 +9417,7 @@ static void atkF1_trysetcaughtmondexflags(void)
 {
     u16 species = GetMonData(&gEnemyParty[0], MON_DATA_SPECIES, NULL);
     u32 personality = GetMonData(&gEnemyParty[0], MON_DATA_PERSONALITY, NULL);
-    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT))
+    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT) | TRUE)
     {
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }

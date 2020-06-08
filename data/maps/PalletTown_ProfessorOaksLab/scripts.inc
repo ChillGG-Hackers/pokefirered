@@ -10,6 +10,9 @@
 .equ PLAYER_STARTER_SPECIES,  VAR_TEMP_2
 .equ RIVAL_STARTER_SPECIES,   VAR_TEMP_3
 .equ RIVAL_STARTER_ID,        VAR_TEMP_4
+.equ STARTER_1,        VAR_TEMP_5
+.equ STARTER_2,        VAR_TEMP_6
+.equ STARTER_3,        VAR_TEMP_7
 
 .equ SHOWED_OAK_COMPLETE_DEX, FLAG_TEMP_2
 
@@ -230,6 +233,12 @@ PalletTown_ProfessorOaksLab_ChooseStarterScene:: @ 816923E
 	textcolor 0
 	applymovement LOCALID_PROF_OAK, PalletTown_ProfessorOaksLab_Movement_OakEnter
 	waitmovement 0
+	random 0x19b
+	setvar STARTER_1, VAR_RESULT+1
+	random 0x19b
+	setvar STARTER_2, VAR_RESULT+1
+	random 0x19b
+	setvar STARTER_3, VAR_RESULT+1
 	removeobject LOCALID_PROF_OAK
 	setobjectxyperm LOCALID_PROF_OAK, 6, 3
 	setobjectmovementtype LOCALID_PROF_OAK, MOVEMENT_TYPE_FACE_DOWN
@@ -1315,7 +1324,7 @@ PalletTown_ProfessorOaksLab_EventScript_SquirtleBall:: @ 8169D78
 	faceplayer
 	setvar PLAYER_STARTER_NUM, 1
 	setvar PLAYER_STARTER_SPECIES, SPECIES_SQUIRTLE
-	setvar RIVAL_STARTER_SPECIES, SPECIES_BULBASAUR
+	setvar RIVAL_STARTER_SPECIES, SËCIES_BULBASAUR
 	setvar RIVAL_STARTER_ID, LOCALID_BULBASAUR_BALL
 	compare VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 3
 	goto_if_ge PalletTown_ProfessorOaksLab_EventScript_LastPokeBall
@@ -1330,7 +1339,7 @@ PalletTown_ProfessorOaksLab_EventScript_CharmanderBall:: @ 8169DAE
 	faceplayer
 	setvar PLAYER_STARTER_NUM, 2
 	setvar PLAYER_STARTER_SPECIES, SPECIES_CHARMANDER
-	setvar RIVAL_STARTER_SPECIES, SPECIES_SQUIRTLE
+	setvar RIVAL_STARTER_SPECIES, SËCIES_SQUIRTLE
 	setvar RIVAL_STARTER_ID, LOCALID_SQUIRTLE_BALL
 	compare VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 3
 	goto_if_ge PalletTown_ProfessorOaksLab_EventScript_LastPokeBall

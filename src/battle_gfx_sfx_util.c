@@ -343,15 +343,17 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battlerId)
         species = gBattleSpritesDataPtr->battlerData[battlerId].transformSpecies;
         currentPersonality = gTransformedPersonalities[battlerId];
     }
-	if (!GetMapFlag(mapName))
-		species = 412;
-	//SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, mapName);
+	if (!GetMapFlag(mapName) & FlagGet(FLAG_HIDE_POKEDEX) & !(FlagGet(BATTLE_TYPE_TRAINER) | 
+		FlagGet(BATTLE_TYPE_DOUBLE) | FlagGet(BATTLE_TYPE_FIRST_BATTLE) | 
+		FlagGet(BATTLE_TYPE_OLD_MAN_TUTORIAL)))
+		species = SPECIES_EGG;
     otId = GetMonData(mon, MON_DATA_OT_ID);
     position = GetBattlerPosition(battlerId);
     HandleLoadSpecialPokePic_DontHandleDeoxys(&gMonFrontPicTable[species],
                                               gMonSpritesGfxPtr->sprites[position],
                                               species, currentPersonality);
     paletteOffset = 0x100 + battlerId * 16;
+	//SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, mon->box.nickname);
     if (gBattleSpritesDataPtr->battlerData[battlerId].transformSpecies == SPECIES_NONE)
         lzPaletteData = GetMonFrontSpritePal(mon);
     else
