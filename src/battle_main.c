@@ -110,6 +110,11 @@ static void FreeResetData_ReturnToOvOrDoEvolutions(void);
 static void ReturnFromBattleToOverworld(void);
 static void TryEvolvePokemon(void);
 static void WaitForEvoSceneToFinish(void);
+static void GiveBabyMonInitialMoveset(struct Pokemon *mon);
+static void GiveBoxBabyMonInitialMoveset(struct BoxPokemon *boxMon);
+static u16 GiveMoveToBoxBabyMon(struct BoxPokemon *boxMon, u16 move);
+static void DeleteFirstMoveAndGiveMoveToBoxBabyMon(struct BoxPokemon *boxMon, u16 move);
+
 
 EWRAM_DATA u16 gBattle_BG0_X = 0;
 EWRAM_DATA u16 gBattle_BG0_Y = 0;
@@ -647,10 +652,114 @@ void CB2_InitBattle(void)
     }
 }
 
+static u16 getRandBaby(void) {
+    u16 bebes[] = {SPECIES_CLEFFA, SPECIES_WYNAUT, SPECIES_PICHU, 
+                   SPECIES_IGGLYBUFF, SPECIES_TYROGUE, SPECIES_AZURILL,
+                   SPECIES_ELEKID, SPECIES_MAGBY, SPECIES_SMOOCHUM,
+                   SPECIES_TOGEPI};
+    return bebes[Random()%10];
+}
+
+static void GiveBabyMonInitialMoveset(struct Pokemon *mon)
+{
+    GiveBoxBabyMonInitialMoveset(&mon->box);
+}
+
+static void GiveBoxBabyMonInitialMoveset(struct BoxPokemon *boxMon)
+{
+    u16 species = GetBoxMonData(boxMon, MON_DATA_SPECIES, NULL);
+    u16 type1 = gBaseStats[species].type1;
+    u16 type2 = gBaseStats[species].type2;
+    s32 i;
+    s32 j;
+    for (i = 0; i < 4; i++)
+    {
+        u16 move;
+        move = (Random()%354)+1;
+        for(j = 0; j < 4; j++) {
+            if(gBattleMoves[move].type != type1) {
+                if(type2) {
+                    if(gBattleMoves[move].type != type2) {
+                        move = (Random()%354)+1;
+                    } else {
+                        break;
+                    }
+                } else {
+                    move = (Random()%354)+1;
+                }
+            } else {
+                break;
+            }
+        }        
+
+        if (GiveMoveToBoxBabyMon(boxMon, move) == 0xFFFF)
+            DeleteFirstMoveAndGiveMoveToBoxBabyMon(boxMon, move);
+    }
+}
+
+static void DeleteFirstMoveAndGiveMoveToBoxBabyMon(struct BoxPokemon *boxMon, u16 move)
+{
+    s32 i;
+    u16 moves[4];
+    u8 pp[4];
+    u8 ppBonuses;
+
+    for (i = 0; i < 3; i++)
+    {
+        moves[i] = GetBoxMonData(boxMon, MON_DATA_MOVE2 + i, NULL);
+        pp[i] = GetBoxMonData(boxMon, MON_DATA_PP2 + i, NULL);
+    }
+
+    ppBonuses = GetBoxMonData(boxMon, MON_DATA_PP_BONUSES, NULL);
+    ppBonuses >>= 2;
+    moves[3] = move;
+    pp[3] = gBattleMoves[move].pp;
+
+    for (i = 0; i < 4; i++)
+    {
+        SetBoxMonData(boxMon, MON_DATA_MOVE1 + i, &moves[i]);
+        SetBoxMonData(boxMon, MON_DATA_PP1 + i, &pp[i]);
+    }
+
+    SetBoxMonData(boxMon, MON_DATA_PP_BONUSES, &ppBonuses);
+}
+
+static u16 GiveMoveToBoxBabyMon(struct BoxPokemon *boxMon, u16 move)
+{
+    s32 i;
+    for (i = 0; i < 4; i++)
+    {
+        u16 existingMove = GetBoxMonData(boxMon, MON_DATA_MOVE1 + i, NULL);
+        if (!existingMove)
+        {
+            SetBoxMonData(boxMon, MON_DATA_MOVE1 + i, &move);
+            SetBoxMonData(boxMon, MON_DATA_PP1 + i, &gBattleMoves[move].pp);
+            return move;
+        }
+        if (existingMove == move)
+            return -2;
+    }
+    return -1;
+}
+
 static void CB2_InitBattleInternal(void)
 {
     s32 i;
-
+    u16 species;
+    u16 thisPoke;
+    u16 HP;
+    for (i = 0; i < PARTY_SIZE; ++i)
+    {        
+        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
+        HP = GetMonData(&gPlayerParty[i], MON_DATA_HP);
+        if (species == SPECIES_NONE)
+            continue;        
+        thisPoke = getRandBaby();
+        SetMonData(&gPlayerParty[i], MON_DATA_SPECIES, &thisPoke);
+        CalculateMonStats(&gPlayerParty[i]);
+        SetMonData(&gPlayerParty[i], MON_DATA_HP, &HP);
+        GiveBabyMonInitialMoveset(&gPlayerParty[i]);
+    }
     SetHBlankCallback(NULL);
     SetVBlankCallback(NULL);
     CpuFill32(0, (void *)VRAM, VRAM_SIZE);
