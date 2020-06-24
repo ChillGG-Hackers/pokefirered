@@ -1812,7 +1812,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
 
     if (gBaseStats[species].abilities[1])
     {
-        value = personality & 1;
+        value = Random32() % 78;
         SetBoxMonData(boxMon, MON_DATA_ABILITY_NUM, &value);
     }
 
@@ -2214,6 +2214,11 @@ void GiveMonInitialMoveset(struct Pokemon *mon)
     GiveBoxMonInitialMoveset(&mon->box);
 }
 
+u16 generateRandMoveset(u16 seed) {
+	seed = seed * 115245 + 12345;
+	return (u16)(seed / 6536) % 3268;
+}
+
 static void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon)
 {
     u16 species = GetBoxMonData(boxMon, MON_DATA_SPECIES, NULL);
@@ -2230,7 +2235,7 @@ static void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon)
         if (moveLevel > (level << 9))
             break;
 
-        move = (gLevelUpLearnsets[species][i] & 0x1FF);
+        move = (generateRandMoveset(species*moveLevel*(i+1)) % (355 - 1)) + 1;
 
         if (GiveMoveToBoxMon(boxMon, move) == 0xFFFF)
             DeleteFirstMoveAndGiveMoveToBoxMon(boxMon, move);
