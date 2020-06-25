@@ -748,11 +748,15 @@ static void CB2_InitBattleInternal(void)
     u16 species;
     u16 thisPoke;
     u16 HP;
+    u16 maxHP;
+    u16 missingHP;
     u16 newHP;
     for (i = 0; i < PARTY_SIZE; ++i)
     {        
         species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
         HP = GetMonData(&gPlayerParty[i], MON_DATA_HP);
+        maxHP = GetMonData(&gPlayerParty[i], MON_DATA_MAX_HP);
+        missingHP = maxHP - HP;
         if (species == SPECIES_NONE)
             continue;        
         thisPoke = ((species+1)%NUM_SPECIES);
@@ -763,13 +767,14 @@ static void CB2_InitBattleInternal(void)
         SetMonData(&gPlayerParty[i], MON_DATA_SPECIES, &thisPoke);
         CalculateMonStats(&gPlayerParty[i]);
         newHP = GetMonData(&gPlayerParty[i], MON_DATA_MAX_HP);
-        if (HP >= newHP)
+        if (missingHP == 0)
         {            
             SetMonData(&gPlayerParty[i], MON_DATA_HP, &newHP);
         } else
         {
-            SetMonData(&gPlayerParty[i], MON_DATA_HP, &HP);
-        }
+            newHP = newHP - missingHP;
+            SetMonData(&gPlayerParty[i], MON_DATA_HP, &newHP);
+        }        
         GiveBabyMonInitialMoveset(&gPlayerParty[i]);
     }
     SetHBlankCallback(NULL);
