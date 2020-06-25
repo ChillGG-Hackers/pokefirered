@@ -754,7 +754,12 @@ static void CB2_InitBattleInternal(void)
         HP = GetMonData(&gPlayerParty[i], MON_DATA_HP);
         if (species == SPECIES_NONE)
             continue;        
-        thisPoke = getRandBaby();
+        thisPoke = ((species+1)%NUM_SPECIES);
+        if (thisPoke == 0)
+        {
+            thisPoke = 1;
+        }
+        
         SetMonData(&gPlayerParty[i], MON_DATA_SPECIES, &thisPoke);
         CalculateMonStats(&gPlayerParty[i]);
         SetMonData(&gPlayerParty[i], MON_DATA_HP, &HP);
