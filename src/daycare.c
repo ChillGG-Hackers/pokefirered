@@ -1156,7 +1156,6 @@ static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
     if (++daycare->stepCounter >= 10)
     {
         u32 steps;
-        SetMonData(&gPlayerParty[i], MON_DATA_LEVEL, &lvl);
 
         for (i = 0; i < gPlayerPartyCount; i++)
         {
