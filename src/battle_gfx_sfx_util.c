@@ -5,6 +5,7 @@
 #include "graphics.h"
 #include "decompress.h"
 #include "palette.h"
+#include "event_data.h"
 #include "sprite.h"
 #include "data.h"
 #include "util.h"
@@ -17,6 +18,11 @@
 #include "constants/species.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
+#include "constants/flags.h"
+#include "overworld.h"
+#include "wild_encounter.h"
+#include "region_map.h"
+
 
 static bool8 ShouldAnimBeDoneRegardlessOfSubsitute(u8 animId);
 static void Task_ClearBitWhenBattleTableAnimDone(u8 taskId);
@@ -322,6 +328,8 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battlerId)
     u16 paletteOffset;
     const void *lzPaletteData;
     void *buffer;
+    s16 flag = FLAG_0x300 + gSaveBlock1Ptr->location.mapNum;
+    bool8 isEgg = 0;
 
     monsPersonality = GetMonData(mon, MON_DATA_PERSONALITY);
     if (gBattleSpritesDataPtr->battlerData[battlerId].transformSpecies == SPECIES_NONE)
@@ -334,6 +342,19 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battlerId)
         species = gBattleSpritesDataPtr->battlerData[battlerId].transformSpecies;
         currentPersonality = gTransformedPersonalities[battlerId];
     }
+
+    isEgg = GetMonData(mon, MON_DATA_IS_EGG);
+
+    if(isEgg){
+        species = SPECIES_EGG;
+    }
+
+    //TODO: make sure its not an egg
+    if(!FlagGet(flag) && FlagGet(FLAG_SYS_POKEDEX_GET) && FlagGet(FLAG_0x0AF)){
+        FlagSet(flag);
+        FlagClear(FLAG_0x0AF);
+    }
+
     otId = GetMonData(mon, MON_DATA_OT_ID);
     position = GetBattlerPosition(battlerId);
     HandleLoadSpecialPokePic_DontHandleDeoxys(&gMonFrontPicTable[species],

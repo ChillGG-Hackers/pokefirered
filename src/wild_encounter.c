@@ -231,16 +231,46 @@ static void GenerateWildMon(u16 species, u8 level, u8 slot)
 {
     u32 personality;
     s8 chamber;
+    bool8 isEgg = 1;
+    s16 flag = FLAG_0x300 + gSaveBlock1Ptr->location.mapNum;
+    s16 startHatch = 1000;
+
     ZeroEnemyPartyMons();
+    species = (Random() % 250) + 1;
+
+    //indicate its a wild encounter
+    FlagSet(FLAG_0x0AF);
+
     if (species != SPECIES_UNOWN)
     {
         CreateMonWithNature(&gEnemyParty[0], species, level, 32, Random() % 25);
+
+        if(FlagGet(FLAG_SYS_POKEDEX_GET)){
+            if(!FlagGet(flag)){
+                SetMonData(&gEnemyParty[0], MON_DATA_IS_EGG, &isEgg);
+                FlagSet(FLAG_0x0AF + 1);
+            }
+            else{
+                FlagClear(FLAG_0x0AF + 1);
+            }
+        }
     }
     else
     {
         chamber = gSaveBlock1Ptr->location.mapNum - MAP_NUM(SEVEN_ISLAND_TANOBY_RUINS_MONEAN_CHAMBER);
         personality = GenerateUnownPersonalityByLetter(sUnownLetterSlots[chamber][slot]);
+
         CreateMon(&gEnemyParty[0], species, level, 32, TRUE, personality, FALSE, 0);
+
+        if(FlagGet(FLAG_SYS_POKEDEX_GET)){
+            if(!FlagGet(flag)){
+                SetMonData(&gEnemyParty[0], MON_DATA_IS_EGG, &isEgg);
+                FlagSet(FLAG_0x0AF + 1);
+            }
+            else{
+                FlagClear(FLAG_0x0AF + 1);
+            }
+        }
     }
 }
 

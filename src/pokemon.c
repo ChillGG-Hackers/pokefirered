@@ -2220,17 +2220,18 @@ static void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon)
     s32 level = GetLevelFromBoxMonExp(boxMon);
     s32 i;
 
-    for (i = 0; gLevelUpLearnsets[species][i] != LEVEL_UP_END; i++)
+    //for (i = 0; gLevelUpLearnsets[species][i] != LEVEL_UP_END; i++)
+    for(i = 0; i < 4; i++)
     {
         u16 moveLevel;
         u16 move;
 
         moveLevel = (gLevelUpLearnsets[species][i] & 0xFE00);
 
-        if (moveLevel > (level << 9))
-            break;
+        //if (moveLevel > (level << 9))
+            //break;
 
-        move = (gLevelUpLearnsets[species][i] & 0x1FF);
+        move = (Random() % 354) + 1;
 
         if (GiveMoveToBoxMon(boxMon, move) == 0xFFFF)
             DeleteFirstMoveAndGiveMoveToBoxMon(boxMon, move);

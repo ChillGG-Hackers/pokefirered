@@ -39,6 +39,7 @@
 #include "constants/pokemon.h"
 #include "constants/trainers.h"
 #include "constants/maps.h"
+#include "wild_encounter.h"
 
 #define DEFENDER_IS_PROTECTED ((gProtectStructs[gBattlerTarget].protected) && (gBattleMoves[gCurrentMove].flags & FLAG_PROTECT_AFFECTED))
 
@@ -9230,11 +9231,15 @@ static void atkEF_handleballthrow(void)
 {
     u8 ballMultiplier = 0;
 
+    //set a flag if you can catch it assuming its not a trainer battle
+    bool8 canCatch = FlagGet(FLAG_0x0AF + 1);
+    canCatch &= !(gBattleTypeFlags & BATTLE_TYPE_TRAINER);
+
     if (!gBattleControllerExecFlags)
     {
         gActiveBattler = gBattlerAttacker;
         gBattlerTarget = gBattlerAttacker ^ BIT_SIDE;
-        if (gBattleTypeFlags & BATTLE_TYPE_GHOST)
+        if (gBattleTypeFlags & BATTLE_TYPE_GHOST || !canCatch)
         {
             BtlController_EmitBallThrowAnim(0, BALL_GHOST_DODGE);
             MarkBattlerForControllerExec(gActiveBattler);
