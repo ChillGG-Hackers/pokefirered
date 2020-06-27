@@ -1136,6 +1136,7 @@ void GiveEggFromDaycare(void)
 static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
 {
     u32 i, validEggs = 0;
+    u16 lvl = EGG_HATCH_LEVEL;
 
     for (i = 0; i < DAYCARE_MON_COUNT; i++)
     {
@@ -1155,6 +1156,7 @@ static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
     if (++daycare->stepCounter >= 10)
     {
         u32 steps;
+        SetMonData(&gPlayerParty[i], MON_DATA_LEVEL, &lvl);
 
         for (i = 0; i < gPlayerPartyCount; i++)
         {
