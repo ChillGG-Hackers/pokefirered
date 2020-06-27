@@ -9239,7 +9239,7 @@ static void atkEF_handleballthrow(void)
     {
         gActiveBattler = gBattlerAttacker;
         gBattlerTarget = gBattlerAttacker ^ BIT_SIDE;
-        if (gBattleTypeFlags & BATTLE_TYPE_GHOST || !canCatch)
+        if (gBattleTypeFlags & BATTLE_TYPE_GHOST || (!canCatch && !(gBattleTypeFlags & BATTLE_TYPE_OLD_MAN_TUTORIAL)))
         {
             BtlController_EmitBallThrowAnim(0, BALL_GHOST_DODGE);
             MarkBattlerForControllerExec(gActiveBattler);
